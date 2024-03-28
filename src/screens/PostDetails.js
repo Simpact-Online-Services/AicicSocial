@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 
 const PostDetails = ({ route }) => {
-  const { imageUrl } = route.params; 
+  const { item } = route.params;
 
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: imageUrl }}
+        source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }}
         style={styles.image}
         resizeMode="contain"
       />
