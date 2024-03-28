@@ -12,8 +12,15 @@ const SearchScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://guflu.in/Social_media/smedia_api.php?route=search&query=${encodeURIComponent(searchQuery)}`);
-        setUserData(response.data);
+        const response = await axios.post('https://guflu.in/Social_media/smedia_api.php', {
+          route: "search",
+          query: searchQuery,
+        });
+        if (response.data.length > 0) {
+          setUserData(response.data);
+        } else {
+          setUserData([]);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -26,8 +33,12 @@ const SearchScreen = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.userImage} />
-      <Text style={styles.userName}>{item.name}</Text>
+      {item.profile_image ? (
+        <Image source={{ uri: item.profile_image }} style={styles.userImage} />
+      ) : (
+        <View style={styles.placeholderImage} />
+      )}
+      <Text style={styles.userName}>{item.fullname}</Text>
     </View>
   );
 
@@ -48,7 +59,7 @@ const SearchScreen = () => {
       <FlatList
         data={userData}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()} // Ensure key is a string
       />
     </View>
   );
@@ -108,6 +119,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+  },
+  placeholderImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginBottom: 10,
+    backgroundColor: '#ccc', // Placeholder color
   },
 });
 
