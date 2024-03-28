@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal, StyleSheet, TextInput, Alert, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import socialApi from '../api/socialApi';
 
 const UpdateProfileScreen = () => {
@@ -18,31 +17,6 @@ const UpdateProfileScreen = () => {
     navigation.navigate('LoginScreen')
     setLogoutModalVisible(false);
   };
-
-  //  const handleSaveChanges = () => {
-  //   const handleSaveChanges = async () => {
-  //     try {
-  //       const response = await socialApi.post('', {
-  //         route: 'profile',
-  //         fullname: name,
-  //         mobile: mobile,
-  //         bio: bio
-  //       });
-  
-  //       if (response.data.result === 1) {
-  //         console.log('Profile updated successfully');
-  //         Alert.alert('Profile updated successfully');
-  //       } else {
-  //         console.error('Unable to update profile:', response.data.msg);
-  //         Alert.alert('Unable to update profile:', response.data.msg);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error updating profile:', error);
-  //       Alert.alert('Error updating profile:', error.message);
-  //     }
-  //   };
-  //   setIsModalVisible(true);
-  // };
   const handleSaveChanges = async () => {
     try {
       const response = await socialApi.post('', {
