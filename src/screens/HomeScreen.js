@@ -28,7 +28,7 @@ const HomeScreen = () => {
         user_id: 2
       });
       if (response.data.result === 1) {
-        console.log('API response:', response.data.posts);
+        // console.log('API response:', response.data.posts);
         setPosts(response.data.posts);
         setComments(response.data.comments);
       } else {
