@@ -92,6 +92,11 @@ const HomeScreen = () => {
       console.error('Error posting comment:', error);
     }
   };
+  
+  const handleItemClick = (item, index) => {
+    setCurrentIndex(index);
+    navigation.navigate("PostDetails", { item });
+  };
 
   const renderCommentModal = () => (
     <Modal
@@ -132,10 +137,10 @@ const HomeScreen = () => {
     </Modal>
   );
 
-  const renderPost = ({ item }) => (
+  const renderPost = ({ item,index }) => (
     <View style={styles.card}>
         <View style={styles.userInfo}>
-      <TouchableOpacity onPress={()=>{navigation.navigate('PostDetails',{imageUrl:`https://guflu.in/Social_media/upload/${item.image_url}`})}}>
+      <TouchableOpacity onPress={() => handleItemClick(item, index)}>
           <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
       </TouchableOpacity>
           <Text style={styles.username}>{item.user_name}</Text>
