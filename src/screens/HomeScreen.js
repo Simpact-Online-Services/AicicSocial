@@ -138,7 +138,7 @@ const HomeScreen = () => {
 
   const renderPost = ({ item,index }) => (
     <View style={styles.card}>
-       <TouchableOpacity onPress={() => handleItemClick(item, index)}>
+       <TouchableOpacity onPress={() => navigation.navigate('UserScreen',{item})}>
         <View style={styles.userInfo}>
           <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
           <Text style={styles.username}>{item.user_name}</Text>
