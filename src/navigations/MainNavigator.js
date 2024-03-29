@@ -15,6 +15,9 @@ import Message from '../screens/Message';
 import SearchScreen from '../screens/SearchScreen';
 import UpdateProfileScreen from '../screens/UpdateProfileScreen';
 import PostDetails from '../screens/PostDetails';
+import ForgotPassword from '../screens/ForgotPassword';
+import ResetPassword from '../screens/ResetPassword';
+// import UserScreen from '../screens/UserScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -79,6 +82,13 @@ const MainNavigator = () => {
           headerShown: false,
         }}
       />
+        {/* <Stack.Screen
+        name="UserScreen"
+        component={UserScreen}
+        options={{
+          headerShown: false,
+        }}
+      /> */}
         <Stack.Screen
         name="Message"
         component={Message}
@@ -93,7 +103,22 @@ const MainNavigator = () => {
           headerShown: false,
         }}
       />
+        <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={{
+          headerShown: false,
+        }}
+      />
+        <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
+    
 
   );
 };
