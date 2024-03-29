@@ -93,8 +93,7 @@ const HomeScreen = () => {
     }
   };
   
-  const handleItemClick = (item, index) => {
-    setCurrentIndex(index);
+  const handleItemClick = (item) => {
     navigation.navigate("PostDetails", { item });
   };
 
@@ -139,18 +138,20 @@ const HomeScreen = () => {
 
   const renderPost = ({ item,index }) => (
     <View style={styles.card}>
+       <TouchableOpacity onPress={() => handleItemClick(item, index)}>
         <View style={styles.userInfo}>
-      <TouchableOpacity onPress={() => handleItemClick(item, index)}>
           <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
-      </TouchableOpacity>
           <Text style={styles.username}>{item.user_name}</Text>
         </View>
+        </TouchableOpacity>
       <Text style={styles.content}>{item.caption}</Text>
+      <TouchableOpacity onPress={() => handleItemClick(item)}>
       <Image
         source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }}
         style={styles.postImage}
         onError={(error) => console.log('Error loading image', error)}
-      />
+        />
+      </TouchableOpacity>
       <View style={styles.interactionButtons}>
         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
           {item.is_like == 1 ? <Icon name={"thumbs-up"} size={24} color={'#0047ab'} /> : <Icon name={"thumbs-up-outline"} size={24} color={'black'} />}
