@@ -1,29 +1,62 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Touchable } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
-const UserScreen = () => {
+const UserScreen = ({ route }) => {
+  const navigation = useNavigation();
+  const { item } = route.params;
   const [isFollowing, setIsFollowing] = useState(false);
 
   const handleFollowToggle = () => {
     setIsFollowing(!isFollowing);
   };
 
+  // Sample image data
+  const imageData = [
+    require('../../assets/images/hotels/granada-1.jpeg'),
+    require('../../assets/images/hotels/phuket-1.jpg'),
+    require('../../assets/images/hotels/polynesia-1.jpeg'),
+    require('../../assets/images/hotels/granada-2.jpeg'),
+    require('../../assets/images/hotels/phuket-2.jpeg'),
+    require('../../assets/images/hotels/polynesia-2.jpeg'),
+    require('../../assets/images/hotels/ac-1.jpeg'),
+    require('../../assets/images/hotels/cb-2.jpeg'),
+    require('../../assets/images/hotels/capri-2.jpeg'),
+    require('../../assets/images/hotels/granada-1.jpeg'),
+    require('../../assets/images/hotels/phuket-1.jpg'),
+    require('../../assets/images/hotels/polynesia-1.jpeg'),
+    require('../../assets/images/hotels/granada-2.jpeg'),
+    require('../../assets/images/hotels/phuket-2.jpeg'),
+    require('../../assets/images/hotels/polynesia-2.jpeg'),
+    require('../../assets/images/hotels/ac-1.jpeg'),
+    require('../../assets/images/hotels/cb-2.jpeg'),
+    require('../../assets/images/hotels/capri-2.jpeg'),
+    // Add more images here
+  ];
+
+  const renderGalleryItem = ({ item }) => (
+    <Image source={item} style={styles.gridImage} />
+   
+  );
+
   return (
     <View style={styles.container}>
       {/* AppBar */}
       <View style={styles.appBar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+          <Icon name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
       {/* Profile Header */}
       <View style={styles.profileHeader}>
-        <Image source={require('./profilePic.jpg')} style={styles.profilePic} />
+        <Image source={require('../../assets/images/users/32.jpeg')} style={styles.profilePic} />
         <View style={styles.userInfo}>
-          <Text style={styles.username}>JohnDoe</Text>
-          <TouchableOpacity style={styles.followButton} onPress={handleFollowToggle}>
+          <Text style={styles.username}>Katrina Dhiwar</Text>
+          <TouchableOpacity
+            style={[styles.followButton, { backgroundColor: isFollowing ? '#FF0000' : '#4CAF50' }]}
+            onPress={handleFollowToggle}>
             <Text style={styles.followButtonText}>{isFollowing ? 'Unfollow' : 'Follow'}</Text>
           </TouchableOpacity>
         </View>
@@ -32,18 +65,20 @@ const UserScreen = () => {
       {/* Bio Section */}
       <View style={styles.bioSection}>
         <Text style={styles.bioText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra ante ac eros molestie, nec dictum eros aliquet.
+          HouseWife 😊{'\n'}
+          Happily Married to Prabhat Kumar Dhiwar ❤️{'\n'}
+          My Husband is my world 💕💕💕
         </Text>
       </View>
 
       {/* Gallery Section */}
-      <ScrollView style={styles.gallery}>
-        {/* Gallery Images */}
-        <Image source={require('./gallery1.jpg')} style={styles.galleryImage} />
-        <Image source={require('./gallery2.jpg')} style={styles.galleryImage} />
-        <Image source={require('./gallery3.jpg')} style={styles.galleryImage} />
-        {/* Add more images here */}
-      </ScrollView>
+      <FlatList
+        data={imageData}
+        renderItem={renderGalleryItem}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={3}
+        contentContainerStyle={styles.gridContainer}
+      />
     </View>
   );
 };
@@ -59,10 +94,9 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingHorizontal: 10,
     alignItems: 'center',
-    height: '30%',
+    height: '15%',
   },
   profilePic: {
     width: 80,
@@ -81,7 +115,6 @@ const styles = StyleSheet.create({
   },
   followButton: {
     marginTop: 10,
-    backgroundColor: '#4CAF50',
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 20,
@@ -92,22 +125,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   bioSection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
+    marginBottom: 10
   },
   bioText: {
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 5,
   },
-  gallery: {
-    flex: 1,
+  gridContainer: {
     paddingHorizontal: 10,
     marginTop: 20,
   },
-  galleryImage: {
-    width: '33%',
-    height: 120,
-    marginRight: 10,
-    marginBottom: 10,
+  gridImage: {
+    width: '32%',
+    aspectRatio: 1, // Aspect ratio 1:1 for square images
+    margin: '0.5%',
     borderRadius: 10,
   },
 });
