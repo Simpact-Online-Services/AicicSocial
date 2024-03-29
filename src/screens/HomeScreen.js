@@ -141,7 +141,7 @@ const HomeScreen = () => {
        <TouchableOpacity onPress={() => navigation.navigate('UserScreen',{item})}>
         <View style={styles.userInfo}>
           <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
-          <Text style={styles.username}>{item.user_name}</Text>
+          <Text style={styles.username}>{item.fullname}</Text>
         </View>
         </TouchableOpacity>
       <Text style={styles.content}>{item.caption}</Text>
