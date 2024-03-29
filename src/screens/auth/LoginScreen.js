@@ -88,6 +88,7 @@ const LoginScreen = () => {
 
     const handleForgotPassword = () => {
         // Implement your forgot password logic here
+        navigation.navigate('ForgotPassword')
     };
 
     const handleSignup = () => {
