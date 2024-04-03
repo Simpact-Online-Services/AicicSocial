@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../App';
 import Icon from 'react-native-vector-icons/Ionicons';
 import socialApi from '../api/socialApi';
+
+
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
@@ -170,6 +172,7 @@ const HomeScreen = () => {
     </View>
   );
 
+  
   return (
     <View style={[styles.container]}>
       <View style={{ flex: 1 }}>
@@ -334,3 +337,4 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
