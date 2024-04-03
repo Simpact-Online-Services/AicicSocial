@@ -53,7 +53,7 @@ const UserScreen = ({ route }) => {
       <View style={styles.profileHeader}>
         <Image source={require('../../assets/images/users/32.jpeg')} style={styles.profilePic} />
         <View style={styles.userInfo}>
-          <Text style={styles.username}>Katrina Dhiwar</Text>
+          <Text style={styles.username}>Katy Perry</Text>
           <TouchableOpacity
             style={[styles.followButton, { backgroundColor: isFollowing ? '#FF0000' : '#4CAF50' }]}
             onPress={handleFollowToggle}>
@@ -65,9 +65,9 @@ const UserScreen = ({ route }) => {
       {/* Bio Section */}
       <View style={styles.bioSection}>
         <Text style={styles.bioText}>
-          HouseWife 😊{'\n'}
-          Happily Married to Prabhat Kumar Dhiwar ❤️{'\n'}
-          My Husband is my world 💕💕💕
+        American singer-songwriter 😊{'\n'}
+          Happily ❤️{'\n'}
+          Music is my world 💕💕💕
         </Text>
       </View>
 
