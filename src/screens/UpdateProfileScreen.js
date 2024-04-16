@@ -11,35 +11,58 @@ const UpdateProfileScreen = () => {
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigation = useNavigation();
+  const baseUrl = 'https://socialmedia.mlmcreatorsindia.com/api/profiles';
 
   const handleLogout = () => {
     // Logic for logout
     navigation.navigate('LoginScreen')
     setLogoutModalVisible(false);
   };
+
   const handleSaveChanges = async () => {
     try {
-      const response = await socialApi.post('', {
-        route: 'profile',
-        user_id: 1,
-        fullname: name,
-        mobile: phoneNumber, // Changed variable name from mobile to phoneNumber
-        bio: bio
+      const response = await axios.post(`profiles/${userId}`, {
+        name: name,
+        email: email,
+        profile_picture: profilePictureUri, // Make sure to replace this with the actual URI of the profile picture
       });
   
-      if (response.data.result === 1) {
+      if (response.data.message === 'Profile updated successfully') {
         console.log('Profile updated successfully');
         Alert.alert('Profile updated successfully');
       } else {
-        console.error('Unable to update profile:', response.data.msg);
-        Alert.alert('Unable to update profile:', response.data.msg);
+        console.error('Unable to update profile:', response.data.message);
+        Alert.alert('Unable to update profile:', response.data.message);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
       Alert.alert('Error updating profile:', error.message);
     }
-    setIsModalVisible(true); // Move this line inside the handleSaveChanges function
+    setIsModalVisible(true);
   };
+  // const handleSaveChanges = async () => {
+  //   try {
+  //     const response = await socialApi.post('', {
+  //       route: 'profile',
+  //       user_id: 1,
+  //       fullname: name,
+  //       mobile: phoneNumber, // Changed variable name from mobile to phoneNumber
+  //       bio: bio
+  //     });
+  
+  //     if (response.data.result === 1) {
+  //       console.log('Profile updated successfully');
+  //       Alert.alert('Profile updated successfully');
+  //     } else {
+  //       console.error('Unable to update profile:', response.data.msg);
+  //       Alert.alert('Unable to update profile:', response.data.msg);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error updating profile:', error);
+  //     Alert.alert('Error updating profile:', error.message);
+  //   }
+  //   setIsModalVisible(true); // Move this line inside the handleSaveChanges function
+  // };
   
 
 

@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import base64 from 'react-native-base64';
-import socialApi from '../../api/socialApi';
+// import socialApi from '../../api/socialApi';
 import { useNavigation } from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
@@ -19,72 +19,66 @@ const LoginScreen = () => {
     const { authState, authDispatch } = useContext(AuthContext);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const { setMode, mode } = useThemeMode();
-    const [mobile, setMobile] = useState("");
+    // const [mobile, setMobile] = useState("");
+    const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const baseUrl = 'https://socialmedia.mlmcreatorsindia.com/api/login';
 
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await socialApi.post('', {
-                route: 'login',
-                token: base64.encode(mobile + ":" + password)
-            })
-
-            console.log("Response Status: ", response.status);
-
+            const response = await axios.post(baseUrl, {
+                email: email,
+                password: password
+            });
+    
             if (response.status === 200) {
                 setLoading(false);
-                console.log(" Login Response Data: ", response.data);
-
-                const userData = response.data.data;
-                if (response.data.result == 1) {
+                const responseData = response.data.response;
+    
+                if (responseData.status === 'success') {
                     console.log("Login Success");
+                    const userData = responseData.data.user;
                     authDispatch({ type: "LOGIN", payload: userData });
-                    navigation.navigate('Root', { screen: 'Search' });
+                    // Navigate to the home page or perform any other action upon successful login
                 } else {
-                    Alert.alert("Unable to Login", response.data.message);
+                    Alert.alert("Unable to Login", responseData.message);
                 }
-                return userData;
             } else {
+                
                 setLoading(false);
-                Alert.alert("Login Failed", "Login Failed");
+                Alert.alert("Login Failed", "An error occurred while logging in.");
             }
         } catch (error) {
             console.log("Login Error: ", error);
             setLoading(false);
-            Alert.alert(
-                "Login Failed",
-            )
+            Alert.alert("Login Failed", "An error occurred while logging in.");
+        }
+    };
+    
+
+    const onLoginPress = () => {
+        if (email.length === 0) {
+            Alert.alert("Enter email", "Email is blank.");
+        } else if (!validateEmail(email)) {
+            Alert.alert("Invalid email", "Please enter a valid email address.");
+        } else if (password.length === 0) {
+            Alert.alert("Enter password", "Password is blank.");
+        } else if (password.length < 4) {
+            Alert.alert("Invalid password", "Password must be at least 4 characters long.");
+        } else {
+            handleLogin();
         }
     };
 
-    const onLoginPress = () => {
-        if (mobile.length == 0) {
-            Alert.alert("Enter mobile no.", "Mobile no is blank.", [
-                { text: "OK", onPress: () => console.log("OK Pressed") },
-            ]);
-        } else if (mobile.length != 10) {
-            Alert.alert("Invalid mobile no.", "Mobile no must be 10 characters.", [
-                { text: "OK", onPress: () => console.log("OK Pressed") },
-            ]);
-        } else {
-            if (password.length == 0) {
-                Alert.alert("Enter password", "Password is blank.", [
-                    { text: "OK", onPress: () => console.log("OK Pressed") },
-                ]);
-            } else if (password.length < 4) {
-                Alert.alert("Invalid mpin", "Mpin must be atleast 4 digit.", [
-                    { text: "OK", onPress: () => console.log("OK Pressed") },
-                ]);
-            }
-            // FORM VALIDATED
-            else {
-                handleLogin();
-            }
-        }
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     };
+
+   
 
     const handleForgotPassword = () => {
         // Implement your forgot password logic here
@@ -107,8 +101,8 @@ const LoginScreen = () => {
 
     if (authState.isSignout === false) {
         return (
-            navigation.navigate('LoginScreen')
-            // navigation.navigate('LoginScreen', { screen: 'HomePage' })
+            // navigation.navigate('LoginScreen')
+            navigation.navigate('LoginScreen', { screen: 'HomePage' })
         )
     }
 
@@ -130,15 +124,15 @@ const LoginScreen = () => {
                                 />
                             </View>
                             <View style={styles.inputContainer}>
-                                <Text style={{ color: "#7F27FF" }}>Mobile Number</Text>
+                                {/* <Text style={{ color: "#7F27FF" }}>Mobile Number</Text> */}
                                 <TextInput
                                     autoCapitalize="none"
                                     autoCorrect={false}
-                                    keyboardType='numeric'
+                                    keyboardType='email-address'
                                     style={styles.input}
-                                    onChangeText={(text) => setMobile(text)}
-                                    value={mobile}
-                                    placeholder="Mobile Number"
+                                    onChangeText={(text) => setEmail(text)}
+                                    value={email}
+                                    placeholder="Email"
                                     placeholderTextColor="#7F27FF"
                                 />
                             </View>
